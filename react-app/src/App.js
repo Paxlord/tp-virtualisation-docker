@@ -6,9 +6,9 @@ function App() {
   const [apiData, setApiData] = useState(null);
 
   const GetDatas = async () => {
-    let data = await axios.get("nodeapp:8080/books");
+    let data = await axios.get("http://localhost:4300/books");
     console.log(data);
-    setApiData(data);
+    setApiData(data.data);
   }
 
   return (
@@ -21,7 +21,7 @@ function App() {
         Pull data from api
       </button>
 
-      {apiData && <p>{apiData}</p>}
+      {apiData && <p>{JSON.stringify(apiData)}</p>}
     </div>
   );
 }
