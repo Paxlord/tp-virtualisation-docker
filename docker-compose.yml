@@ -11,9 +11,9 @@ services:
         #3 environment variables are needed : The credentials to connect to the database 
         #and the name of a default database
         environment: 
-            MONGO_INITDB_DATABASE: MyDatabase
-            MONGO_INITDB_ROOT_USERNAME: root
-            MONGO_INITDB_ROOT_PASSWORD: example
+            MONGO_INITDB_DATABASE: "${DATABASE_NAME}"
+            MONGO_INITDB_ROOT_USERNAME: "${DATABASE_USER}"
+            MONGO_INITDB_ROOT_PASSWORD: "${DATABASE_PASSWORD}"
     # Node container which runs the API
     nodeapp:
         #The build directory is the folder that conains the source of the node app
@@ -26,6 +26,10 @@ services:
         #We wait for database to be launched to launch this container
         depends_on: 
             - "mongoapp"
+        environment: 
+            DATABASE_NAME: "${DATABASE_NAME}"
+            DATABASE_USER: "${DATABASE_USER}"
+            DATABASE_PASSWORD: "${DATABASE_PASSWORD}"
     # React continaer which runs the Front-end
     reactapp:
         #The build directory is the folder that contains the source of the react app
