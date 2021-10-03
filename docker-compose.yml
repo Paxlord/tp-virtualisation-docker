@@ -1,26 +1,41 @@
 version: "3.9"
 services: 
+    # Mongo container that launch and manages the database
     mongoapp:
         image: mongo:5.0.3
+        #We always restart the database to avoid errors
         restart: always
+        #Mongo works by default on the port 27017
         ports: 
             - "27017"
+        #3 environment variables are needed : The credentials to connect to the database 
+        #and the name of a default database
         environment: 
             MONGO_INITDB_DATABASE: MyDatabase
             MONGO_INITDB_ROOT_USERNAME: root
             MONGO_INITDB_ROOT_PASSWORD: example
+    # Node container which runs the API
     nodeapp:
+        #The build directory is the folder that conains the source of the node app
         build: ./node-app
+        #By convention we use the port 8080 and we are mapping it to the port 4300
         ports: 
             - "4300:8080"
+        #We always restart the container to avoid bugs or errors dring the launch
         restart: always
+        #We wait for database to be launched to launch this container
         depends_on: 
             - "mongoapp"
+    # React continaer which runs the Front-end
     reactapp:
+        #The build directory is the folder that contains the source of the react app
         build: ./react-app
+        #By default the app runs on port 3000 we are mapping it to port 4301
         ports:
             - "4301:3000"
+        #Always restarting the container to avoid build errors
         restart: always
+        #We are waiting for the API to run before launching the front end container
         depends_on: 
             - "nodeapp"
     
