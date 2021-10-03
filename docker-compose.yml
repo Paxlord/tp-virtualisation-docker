@@ -42,5 +42,3 @@ services:
         #We are waiting for the API to run before launching the front end container
         depends_on: 
             - "nodeapp"
-    
-    
