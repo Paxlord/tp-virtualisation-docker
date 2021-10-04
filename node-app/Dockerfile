@@ -4,7 +4,6 @@ FROM node:14
 WORKDIR /usr/src/node-app/
 
 # Putting the sources of the project into the project folder on the container
-COPY src ./
 COPY ./index.js ./
 
 # Puttin the list of dependancies into the project folder on the container
