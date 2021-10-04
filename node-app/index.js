@@ -3,7 +3,7 @@ const { MongoClient } = require('mongodb');
 const cors = require('cors');
 
 const PORT = 8080;
-const DB_URI = 'mongodb://root:example@mongoapp:27017/MyDatabase';
+const DB_URI = `mongodb://${process.env.DATABASE_USER}:${process.env.DATABASE_PASSWORD}@mongoapp:27017/${process.env.DATABASE_NAME}`;
 
 const client = new MongoClient(DB_URI, { authSource: "admin"});
 
@@ -16,7 +16,7 @@ async function main(){
     await client.connect();
 
     console.log("Succesfully connected to the database");
-    const db = client.db("MyDatabase");
+    const db = client.db(`${process.env.DATABASE_NAME}`);
     await db.createCollection('books');
 
     const books = db.collection("books");
